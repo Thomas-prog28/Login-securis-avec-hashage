@@ -1,0 +1,118 @@
+/* ------------------------------
+   STYLE GLOBAL — AMBIANCE WESTERN
+---------------------------------*/
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Georgia", serif;
+    background: #f2e3c6 url('/theme.png') center/cover fixed;
+    color: #3b2f2f;
+}
+
+/* Effet papier vieilli */
+h1, h2 {
+    text-align: center;
+    font-family: "Cinzel", serif;
+    letter-spacing: 2px;
+    color: #4b2e0f;
+    text-shadow: 2px 2px #e8d3a2;
+}
+
+/* ------------------------------
+   CONTENEUR CENTRAL
+---------------------------------*/
+
+form {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgba(255, 248, 230, 0.9);
+    border: 3px solid #8b5a2b;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    backdrop-filter: blur(2px);
+}
+
+/* ------------------------------
+   LABELS & INPUTS
+---------------------------------*/
+
+label {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #4b2e0f;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 2px solid #8b5a2b;
+    border-radius: 5px;
+    background: #fff8e6;
+    font-size: 1rem;
+    color: #3b2f2f;
+}
+
+/* ------------------------------
+   BOUTONS
+---------------------------------*/
+
+input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background: #8b5a2b;
+    color: #fff;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: 0.2s;
+}
+
+input[type="submit"]:hover {
+    background: #a66c3b;
+    transform: scale(1.03);
+}
+
+/* ------------------------------
+   MESSAGES D’ERREUR
+---------------------------------*/
+
+ul {
+    padding-left: 20px;
+}
+
+ul li {
+    color: #b30000;
+    font-weight: bold;
+}
+
+/* ------------------------------
+   DASHBOARD
+---------------------------------*/
+
+.dashboard-box {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 25px;
+    background: rgba(255, 248, 230, 0.9);
+    border: 3px solid #8b5a2b;
+    border-radius: 8px;
+    text-align: center;
+}
+
+a {
+    color: #8b5a2b;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
