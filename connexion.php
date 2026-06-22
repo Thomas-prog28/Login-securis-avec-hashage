@@ -89,6 +89,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     class="w-full mt-1 px-4 py-2 border-2 border-[#8b5a2b] rounded bg-[#fff8e6] text-[#3b2f2f] focus:outline-none focus:ring-2 focus:ring-[#a66c3b]">
             </div>
 
+            <div class="text-right mb-6">
+            <a href="forgot_password.php" class="text-[#8b5a2b] font-bold underline hover:text-[#a66c3b]">
+                Mot de passe oublié ?
+            </a>
+        </div>
+
             <!-- Zone d'erreurs -->
             <?php if (!empty($error)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
