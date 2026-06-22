@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insert = $pdo->prepare("INSERT INTO utilisateurs (username, password, email, created_at) VALUES(:username, :password, :email, NOW())");
             $insert->execute([':username' => $user, ':password' => $hashedPassword, ':email' => $email]);
             $_SESSION['success_message'] = "Inscription réussie ! Vous pouvez vous connecter ";
-            header("Location: connexion.php");
+            header("Location: index.php");
             exit();
         }
     }
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2 class="text-2xl text-center text-[#4b2e0f] mb-6">Inscription</h2>
 
         <div class="text-center mb-6">
-            <a href="connexion.php" class="text-[#8b5a2b] font-bold underline hover:text-[#a66c3b]">
+            <a href="index.php" class="text-[#8b5a2b] font-bold underline hover:text-[#a66c3b]">
                 Déjà inscrit ? Connexion
             </a>
         </div>

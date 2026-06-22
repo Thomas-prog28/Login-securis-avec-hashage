@@ -23,11 +23,16 @@ $user = $stmt->fetch();
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
-    <style> body { font-family: "Cinzel", serif; } </style>
+    <style>
+        body {
+            font-family: "Cinzel", serif;
+        }
+    </style>
     <title>Profil utilisateur</title>
 </head>
 
@@ -42,9 +47,19 @@ $user = $stmt->fetch();
                 Profil de <span class="font-bold"><?= htmlspecialchars($user['username']) ?></span>
             </h1>
 
-            <p class="text-lg text-[#4b2e0f] mb-2">
-                <strong>Email :</strong> <?= htmlspecialchars($user['email']) ?>
-            </p>
+            <div class="text-lg text-[#4b2e0f] mb-2">
+                <strong>Email :</strong>
+
+                <?php if (empty($user['email'])): ?>
+                    <a href="add_email.php?id=<?= $id ?>"
+                        class="text-blue-700 underline hover:text-blue-900 ml-2">
+                        Ajouter un email
+                    </a>
+                <?php else: ?>
+                    <span class="ml-2"><?= htmlspecialchars($user['email']) ?></span>
+                <?php endif; ?>
+            </div>
+
 
             <p class="text-lg text-[#4b2e0f] mb-6">
                 <strong>Inscription :</strong> <?= $user['created_at'] ?>
@@ -55,7 +70,7 @@ $user = $stmt->fetch();
         <?php endif; ?>
 
         <a href="list_users.php"
-           class="inline-block bg-[#8b5a2b] hover:bg-[#a66c3b] text-white font-bold py-3 px-6 
+            class="inline-block bg-[#8b5a2b] hover:bg-[#a66c3b] text-white font-bold py-3 px-6 
                   rounded transition transform hover:scale-105 mt-6">
             Retour à la liste
         </a>
@@ -63,4 +78,5 @@ $user = $stmt->fetch();
     </div>
 
 </body>
+
 </html>
