@@ -37,44 +37,73 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="style.css"> -->
-
     <title>Connexion</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Police Western -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Cinzel", serif;
+        }
+    </style>
 </head>
 
-<body>
-    <h1>Dashboard des familles</h1>
-    <p>
-    <h2>Connexion</h2>
-    <h2><a href="inscription.php">S'enregistrer</a></h2>
-    </p>
-    <form method="POST">
-        <div>
-            <label for="user">Nom d'utilisateur</label>
-            <input type="text" name="user" id="user" required>
+<body class="min-h-screen bg-[url('https://images.unsplash.com/photo-1526401485004-2fda9f6d2f6b')] bg-cover bg-center bg-fixed flex items-center justify-center">
+
+    <div class="bg-[#fff8e6]/90 border-4 border-[#8b5a2b] shadow-xl rounded-lg p-10 w-full max-w-md backdrop-blur-sm">
+
+        <h1 class="text-4xl text-center text-[#4b2e0f] drop-shadow-md mb-2">Dashboard des familles</h1>
+        <h2 class="text-2xl text-center text-[#4b2e0f] mb-8">Connexion</h2>
+        <div class="text-center mb-6">
+            <a href="inscription.php" class="text-[#8b5a2b] font-bold underline hover:text-[#a66c3b]">
+                Pas encore inscrit ? Enregistre-toi
+            </a>
         </div>
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="text" name="password" id="password">
-        </div>
-        <div>
-            <?php if (!empty($errors)): ?>
-                <ul style="color:red;">
-                    <?php foreach ($errors as $err): ?>
-                        <li><?= htmlspecialchars($err) ?></li>
-                    <?php endforeach; ?>
-                </ul>
+<?php if (!empty($_SESSION['success_message'])): ?>
+    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <?= htmlspecialchars($_SESSION['success_message']) ?>
+    </div>
+    <?php unset($_SESSION['success_message']); ?>
+<?php endif; ?>
+
+        <form method="POST" class="space-y-6">
+
+            <div>
+                <label for="user" class="block text-lg font-bold text-[#4b2e0f]">Nom d'utilisateur</label>
+                <input type="text" name="user" id="user" required
+                    class="w-full mt-1 px-4 py-2 border-2 border-[#8b5a2b] rounded bg-[#fff8e6] text-[#3b2f2f] focus:outline-none focus:ring-2 focus:ring-[#a66c3b]">
+            </div>
+
+            <div>
+                <label for="password" class="block text-lg font-bold text-[#4b2e0f]">Mot de passe</label>
+                <input type="password" name="password" id="password" required
+                    class="w-full mt-1 px-4 py-2 border-2 border-[#8b5a2b] rounded bg-[#fff8e6] text-[#3b2f2f] focus:outline-none focus:ring-2 focus:ring-[#a66c3b]">
+            </div>
+
+            <!-- Zone d'erreurs -->
+            <?php if (!empty($error)): ?>
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                    <?= htmlspecialchars($error) ?>
+                </div>
             <?php endif; ?>
-        </div>
-        <div>
-            <input type="submit" value="Se connecter">
-        </div>
-    </form>
+
+            <div>
+                <input type="submit" value="Se connecter"
+                    class="w-full bg-[#8b5a2b] hover:bg-[#a66c3b] text-white font-bold py-3 rounded cursor-pointer transition transform hover:scale-105">
+            </div>
+
+        </form>
+    </div>
+
 </body>
 
 </html>
