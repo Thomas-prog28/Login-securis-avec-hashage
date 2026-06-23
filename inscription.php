@@ -20,9 +20,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (strlen($password) < 12) {
         $errors[] = "Le mot de passe doit faire au moins 12 caractères";
     }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    if (!empty($email) && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors[] = "L'email n'est pas valide";
     }
+
+    // ---------------------------
+    // 🔥 GESTION DE L'AVATAR
+    // ---------------------------
+    $avatarName = null;
+
+    if (!empty($_FILES['avatar']['name'])) {
+
+        $file = $_FILES['avatar'];
+        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+
+        $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+
+        if (!in_array($ext, $allowed)) {
+            $errors[] = "Format d'image non autorisé (jpg, jpeg, png, gif uniquement)";
+        }
+
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            $errors[] = "Erreur lors de l'upload de l'image";
+        }
+
+        if (empty($errors)) {
+            // Nom unique
+            $avatarName = uniqid("avatar_") . "." . $ext;
+
+            // Dossier uploads
+            $uploadPath = __DIR__ . "/uploads/" . $avatarName;
+
+            // Déplacement du fichier
+            move_uploaded_file($file['tmp_name'], $uploadPath);
+        }
+    }
+
     if (empty($errors)) {
         //vérifie si l'utilisateur existe en base de données
         // echo "<pre>";
@@ -37,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             //insérer dans la base de données
 
-            $insert = $pdo->prepare("INSERT INTO utilisateurs (username, password, email, created_at) VALUES(:username, :password, :email, NOW())");
-            $insert->execute([':username' => $user, ':password' => $hashedPassword, ':email' => $email]);
+            $insert = $pdo->prepare("INSERT INTO utilisateurs (username, password, email, created_at, avatar) VALUES(:username, :password, :email, NOW(), :avatar)");
+            $insert->execute([':username' => $user, ':password' => $hashedPassword, ':email' => $email, ':avatar' => $avatarName]);
             $_SESSION['success_message'] = "Inscription réussie ! Vous pouvez vous connecter ";
             header("Location: index.php");
             exit();
@@ -80,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </a>
         </div>
 
-        <form method="POST" class="space-y-6">
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
 
             <div>
                 <label for="user" class="block text-lg font-bold text-[#4b2e0f]">Nom d'utilisateur</label>
@@ -96,10 +129,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <div>
                 <label for="email" class="block text-lg font-bold text-[#4b2e0f]">Email</label>
-                <input type="email" name="email" id="email" required
+                <input type="text" name="email" id="email"
                     class="w-full mt-1 px-4 py-2 border-2 border-[#8b5a2b] rounded bg-[#fff8e6] text-[#3b2f2f] focus:outline-none focus:ring-2 focus:ring-[#a66c3b]">
             </div>
 
+            <div>
+                <label for="avatar" class="block text-lg font-bold text-[#4b2e0f]">Glisse ton avatar ici</label>
+                <input type="file" name="avatar" accept="image/*" id="avatar"
+                    class="w-full mt-1 px-4 py-2 border-2 border-[#8b5a2b] rounded bg-[#fff8e6] text-[#3b2f2f] focus:outline-none focus:ring-2 focus:ring-[#a66c3b]">
+            </div>
 
             <!-- Zone d'erreurs -->
             <?php if (!empty($errors)): ?>
