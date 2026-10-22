@@ -2,7 +2,13 @@
 require_once 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: connexion.php");
+    header("Location: index.php");
+    exit;
+}
+
+// Seul un administrateur peut supprimer un utilisateur
+if (($_SESSION['role'] ?? '') !== 'admin') {
+    header("Location: list_users.php?error=forbidden");
     exit;
 }
 
@@ -14,7 +20,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $id = (int) $_GET['id'];
 
 // Empêcher de se supprimer soi-même
-if ($id === $_SESSION['user_id']) {
+if ($id === (int) $_SESSION['user_id']) {
     header("Location: list_users.php?error=cannot_delete_self");
     exit;
 }

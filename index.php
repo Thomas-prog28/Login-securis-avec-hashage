@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             //stocker des informations utiles de l'utilisateur
             $_SESSION['user_id'] = $read['id'];
             $_SESSION['name'] = $read['username'];
+            $_SESSION['role'] = $read['role'];
 
             header("Location: dashboard.php");
             exit();

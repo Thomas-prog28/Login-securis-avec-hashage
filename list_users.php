@@ -2,12 +2,14 @@
 require_once 'config.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: connexion.php");
+    header("Location: index.php");
     exit;
 }
 
+$isAdmin = ($_SESSION['role'] ?? '') === 'admin';
+
 // Récupération des utilisateurs
-$stmt = $pdo->query("SELECT id, username, email, created_at FROM utilisateurs ORDER BY id ASC");
+$stmt = $pdo->query("SELECT id, username, email FROM utilisateurs ORDER BY id ASC");
 $users = $stmt->fetchAll();
 ?>
 <!DOCTYPE html>
@@ -44,6 +46,12 @@ $users = $stmt->fetchAll();
             </div>
         <?php endif; ?>
 
+        <?php if (!empty($_GET['error']) && $_GET['error'] === "forbidden"): ?>
+            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                Action réservée aux administrateurs.
+            </div>
+        <?php endif; ?>
+
         <?php if (!empty($_GET['error']) && $_GET['error'] === "not_found"): ?>
             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                 Utilisateur introuvable.
@@ -65,10 +73,12 @@ $users = $stmt->fetchAll();
                         <td class="border p-2"><?= $u['id'] ?></td>
                         <td class="border p-2"><?= htmlspecialchars($u['username']) ?></td>
                         <td class="border p-2"><?= htmlspecialchars($u['email']) ?></td>
-                        <td class="border p-2"><?= $u['created_at'] ?></td>
+                        <td class="border p-2"></td>
                         <td class="border p-2 space-x-3">
                             <a class="text-blue-700 underline" href="profile.php?id=<?= $u['id'] ?>">Voir profil</a>
-                            <a class="text-red-700 underline" href="delete.php?id=<?= $u['id'] ?>">Supprimer</a>
+                            <?php if ($isAdmin): ?>
+                                <a class="text-red-700 underline" href="delete.php?id=<?= $u['id'] ?>">Supprimer</a>
+                            <?php endif; ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>

@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         <?php endif; ?>
 
-        <a href="connexion.php"
+        <a href="index.php"
            class="inline-block mt-6 text-[#8b5a2b] underline hover:text-[#a66c3b]">
             Retour à la connexion
         </a>

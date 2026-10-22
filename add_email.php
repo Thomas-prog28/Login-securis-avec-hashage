@@ -3,16 +3,12 @@ require_once 'config.php';
 
 // Vérifier que l'utilisateur est connecté
 if (!isset($_SESSION['user_id'])) {
-    header("Location: connexion.php");
+    header("Location: index.php");
     exit;
 }
 
-// Vérifier que l'ID est présent dans l'URL
-if (!isset($_GET['id']) || empty($_GET['id'])) {
-    die("ID manquant.");
-}
-
-$id = (int) $_GET['id'];
+// On ne modifie que son propre compte : l'id vient de la session, jamais de l'URL
+$id = (int) $_SESSION['user_id'];
 
 // Si le formulaire est soumis
 $message = "";
